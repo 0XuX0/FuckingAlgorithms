@@ -6,36 +6,37 @@
  * @Date 2020/5/10
  **/
 
-public class BST {
+public class BST <Key extends Comparable<Key>, Value>{
     private Node root;
 
-    public int size() {
-        return size(root);
-    }
-
-    public int get(int key) {
-        return get(root, key).value;
-    }
-
-    public void put(int key, int val) {
-        root = put(root, key, val);
-    }
-
-    public void print() {
-
-    }
-
     private class Node {
-        private int key;
-        private int value;
+        private Key key;
+        private Value value;
         private Node left, right;
         private int N; //以该节点为根的子树中的节点总数
 
-        public Node(int key, int value, int N) {
+        public Node(Key key, Value value, int N) {
             this.key = key;
             this.value = value;
             this.N = N;
         }
+    }
+
+    public void print() {
+        System.out.println(root.value);
+        System.out.println(root.right.value);
+        System.out.println(root.right.right.value);
+    }
+    public int size() {
+        return size(root);
+    }
+
+    public Value get(Key key) {
+        return get(root, key);
+    }
+
+    public void put(Key key, Value val) {
+        root = put(root, key, val);
     }
 
     private int size(Node x) {
@@ -43,17 +44,19 @@ public class BST {
         else return x.N;
     }
 
-    private Node get(Node x, int key) {
+    private Value get(Node x, Key key) {
         if (x == null) return null;
-        if (x.key < key) return get(x.right, key);
-        else if (x.key > key) return get(x.left, key);
-        else return x;
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) return get(x.left, key);
+        else if (cmp > 0) return get(x.right, key);
+        else return x.value;
     }
 
-    private Node put(Node x, int key, int val) {
+    private Node put(Node x, Key key, Value val) {
         if(x == null) return new Node(key, val, 1);
-        if (x.key < key) x.left = put(x.right, key, val);
-        else if (x.key > key) x.right = put(x.left, key, val);
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) x.left = put(x.left, key, val);
+        else if (cmp > 0) x.right = put(x.right, key, val);
         else x.value = val;
         x.N = size(x.left) + size(x.right) + 1;
         return x;
@@ -63,5 +66,4 @@ public class BST {
     //TODO 层次遍历
     //TODO 是否对称
     //TODO 前序 中序 后序
-    //TODO 最大深度 最小深度
 }
