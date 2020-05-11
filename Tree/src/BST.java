@@ -1,3 +1,4 @@
+import java.util.*;
 
 /**
  * @ClassName BTS
@@ -22,11 +23,14 @@ public class BST <Key extends Comparable<Key>, Value>{
         }
     }
 
-    public void print() {
+    public void print(Node root) {
+        int height = height(root);
+
         System.out.println(root.value);
         System.out.println(root.right.value);
         System.out.println(root.right.right.value);
     }
+
     public int size() {
         return size(root);
     }
@@ -62,8 +66,54 @@ public class BST <Key extends Comparable<Key>, Value>{
         return x;
     }
 
+    private int height(Node root) {
+        int height = 1;
+        int modCount = 1;
+        while(modCount <= root.N) {
+            modCount = modCount << 1;
+            height += 1;
+        }
+        return height - 1;
+    }
+
+    public int[] inorder() {
+        List<Integer> inorderList = new ArrayList<>();
+        inorder(root, inorderList);
+        return inorderList.stream().mapToInt(Integer::valueOf).toArray();
+    }
+
+    private void inorder(Node root, List<Integer> inorderList) {
+        if(root.left != null) {
+            inorder(root.left, inorderList);
+        }
+        inorderList.add((Integer) root.value);
+        if(root.right != null) {
+            inorder(root.right, inorderList);
+        }
+    }
+
+    public int[] levelorder() {
+        List<Integer> levelorderList = new ArrayList<>();
+        inorder(root, levelorderList);
+        return levelorderList.stream().mapToInt(Integer::valueOf).toArray();
+    }
+
+    private void levelorder(Node root, List<Integer> levelorderList) {
+        LinkedList<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            Node head = queue.poll();
+            levelorderList.add((Integer) head.value);
+            if(root.left != null) {
+                queue.offer(root.left);
+            }
+            if(root.right != null) {
+                queue.offer(root.right);
+            }
+        }
+    }
+
     //TODO 递归遍历
-    //TODO 层次遍历
     //TODO 是否对称
     //TODO 前序 中序 后序
 }

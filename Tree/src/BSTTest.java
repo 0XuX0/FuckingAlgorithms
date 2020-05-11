@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ()
  *
@@ -11,10 +14,13 @@ public class BSTTest {
 
         tree.put(2,2);
         tree.put(1,1);
+        tree.put(4,4);
         tree.put(3,3);
 
-//        tree.print();
-
-        tree.put(4,4);
+        int[] res = new int[4];
+        res = tree.inorder();
+        for(int i= 0; i < 4; i++) {
+            System.out.print(res[i] + " ");
+        }
     }
 }
