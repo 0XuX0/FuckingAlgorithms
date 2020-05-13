@@ -25,10 +25,8 @@ public class BST <Key extends Comparable<Key>, Value>{
 
     public void print(Node root) {
         int height = height(root);
+        LinkedHashMap map = new LinkedHashMap<>();
 
-        System.out.println(root.value);
-        System.out.println(root.right.value);
-        System.out.println(root.right.right.value);
     }
 
     public int size() {
@@ -94,7 +92,7 @@ public class BST <Key extends Comparable<Key>, Value>{
 
     public int[] levelorder() {
         List<Integer> levelorderList = new ArrayList<>();
-        inorder(root, levelorderList);
+        levelorder(root, levelorderList);
         return levelorderList.stream().mapToInt(Integer::valueOf).toArray();
     }
 
@@ -104,11 +102,11 @@ public class BST <Key extends Comparable<Key>, Value>{
         while(!queue.isEmpty()) {
             Node head = queue.poll();
             levelorderList.add((Integer) head.value);
-            if(root.left != null) {
-                queue.offer(root.left);
+            if(head.left != null) {
+                queue.offer(head.left);
             }
-            if(root.right != null) {
-                queue.offer(root.right);
+            if(head.right != null) {
+                queue.offer(head.right);
             }
         }
     }
