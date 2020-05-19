@@ -17,16 +17,6 @@ public class BSTTest {
         tree.put(4,4);
         tree.put(3,3);
 
-        int[] res1 = tree.inorder();
-        for(int i= 0; i < 4; i++) {
-            System.out.print(res1[i] + " ");
-        }
-
-        System.out.println("");
-
-        int[] res2 = tree.levelorder();
-        for(int i= 0; i < 4; i++) {
-            System.out.print(res2[i] + " ");
-        }
+        tree.print();
     }
 }
